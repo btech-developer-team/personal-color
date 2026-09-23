@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ContactForm from "@/components/result/ContactForm";
 import Heading from "@/components/ui/Heading";
 
@@ -6,8 +7,10 @@ const Page = () => {
     <div className="bg-main min-h-screen w-screen flex flex-col justify-center items-center">
       <Heading size="md" />
 
-      <div className="md:w-[20vw] w-[80%]">
-        <ContactForm />
+      <div className="xl:w-[30vw] md:w-[50vw] w-[80%]">
+        <Suspense>
+          <ContactForm />
+        </Suspense>
       </div>
     </div>
   );

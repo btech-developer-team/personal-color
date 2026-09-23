@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SelectTone from "@/components/SelectTone/SelectToneComponent";
 import { getTone } from "@/lib/selectTone/getTone";
 
@@ -8,6 +9,7 @@ const Page = async () => {
   const paletteImages = depthLevel.map((item) => item.image);
 
   return (
+    <Suspense>
     <SelectTone
       pageIndex={10}
       tone="SKIN TONE"
@@ -18,6 +20,7 @@ const Page = async () => {
       judulTone="Check undertone kamu 1/3"
       description="mohon identifikasi warna yang paling mendekati dengan kulit anda."
     />
+    </Suspense>
   );
 };
 

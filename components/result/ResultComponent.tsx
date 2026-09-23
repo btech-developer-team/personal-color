@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Cushion from "./Cushion";
 import ColorPalette from "./ColorPalette";
 import HeaderLeft from "./HeaderLeft";
@@ -130,7 +131,9 @@ const ResultComponent = async ({ trx }: { trx: string }) => {
           <FacePallatte image={facePalatte[0].src ?? ""}></FacePallatte>
         </div>
         <div className=" mt-5 flex flex-col gap-3 items-center justify-center py-5">
-          <FinishLink />
+          <Suspense>
+            <FinishLink />
+          </Suspense>
           {/* <Link href="https://ecommerce.berlstore.com/maps" target="_blank">
           <Button className="cursor-pointer h-auto flex flex-col bg-[#4A2E1F] text-white font-bold text-lg rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.25)]">
             Mitra Terdekat

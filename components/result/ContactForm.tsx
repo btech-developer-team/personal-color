@@ -17,13 +17,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTrackingHref } from "@/lib/utils/withSearchParams";
 import {
-  getFromCookies,
   getSkinTone,
   getUnderTone,
   removeCookie,
-  saveToCookies,
 } from "@/lib/utils/cookies";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoadingModal from "../ui/loadingModal";
 
 const ContactForm = () => {
@@ -44,23 +42,9 @@ const ContactForm = () => {
     },
   });
 
-  useEffect(() => {
-    const userOld = getFromCookies<ContactSchemaType>("contact-data");
-
-    if (userOld) {
-      form.setValue("name", userOld.name || "");
-      form.setValue("email", userOld.email || "");
-      form.setValue("nohp", userOld.nohp || "");
-      form.setValue("address", userOld.address || "");
-    }
-  }, []);
-
   const onSubmit = async (data: ContactSchemaType) => {
-    saveToCookies("contact-data", data);
-
     const depth_levels = getSkinTone();
     const undertone_color = getUnderTone();
-    const contact = getFromCookies<ContactSchemaType>("contact-data");
 
     const lat = localStorage.getItem("user_lat") || "";
     const long = localStorage.getItem("user_long") || "";
@@ -73,10 +57,10 @@ const ContactForm = () => {
       ...(ref ? { ref } : {}),
       ...(event ? { event } : {}),
       data: {
-        name: contact?.name || "",
-        email: contact?.email || "",
-        phone: contact?.nohp || "",
-        address: contact?.address || "",
+        name: data.name || "",
+        email: data.email || "",
+        phone: data.nohp || "",
+        address: data.address || "",
         lat,
         long,
         ...(ref ? { ref } : {}),
@@ -110,6 +94,12 @@ const ContactForm = () => {
         // const resEmail = await sendEmail.json();
 
         setSuccess(true);
+        form.reset({
+          name: "",
+          email: "",
+          nohp: "",
+          address: "",
+        });
 
         setTimeout(() => {
           // setLoading(false);

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Undertone from "@/components/SelectTone/SelectToneComponent";
 import { getTone } from "@/lib/selectTone/getTone";
 
@@ -7,6 +8,7 @@ const Page = async () => {
 
   const paletteImages = depthLevel.map((item) => item.image);
   return (
+    <Suspense>
     <Undertone
       pageIndex={1}
       tone="UNDERTONE"
@@ -17,6 +19,7 @@ const Page = async () => {
       judulTone="Check undertone kamu 2/3"
       description="pilih warna yang membuat kulit anda tampak cerah terutama pada bagian bawah mata dan area bibir / smile line"
     />
+    </Suspense>
   );
 };
 
