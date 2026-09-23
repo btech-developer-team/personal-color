@@ -19,7 +19,6 @@ const Cushion = ({ CushionImage }: { CushionImage: any[] }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getColor: any = getFromCookies("selectedColorSkinTone");
-  // console.log(getColor);
 
   const current = CushionImage[index];
 

@@ -12,14 +12,15 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Loader2, MapPin } from "lucide-react";
+import { useTrackingHref } from "@/lib/utils/withSearchParams";
 
 const Home = () => {
+  const withParams = useTrackingHref();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const handleAllow = () => {
     setLoading(true);
-    window.location.href = "/hint";
+    window.location.href = withParams("/hint");
     // if (!navigator.geolocation) {
     //   alert("Browser kamu tidak mendukung akses lokasi.");
     //   setLoading(false);
@@ -36,7 +37,6 @@ const Home = () => {
     //   (position) => {
     //     setLoading(false);
     //     const { latitude, longitude } = position.coords;
-    //     console.log("Lokasi berhasil:", latitude, longitude);
     //     localStorage.setItem("user_lat", latitude.toString());
     //     localStorage.setItem("user_long", longitude.toString());
     //   },
@@ -64,7 +64,7 @@ const Home = () => {
     //   },
     //   options,
     // );
-  };
+  }; 
 
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center text-center bg-utama px-5">
@@ -90,7 +90,9 @@ const Home = () => {
         <Button
           className="berl-btn w-full py-3 text-base sm:text-lg"
           // onClick={() => setOpen(true)}
-          onClick={() => (window.location.href = "/hint")}
+          onClick={() => {
+            window.location.href = withParams("/hint");
+          }}
         >
           Mulai
         </Button>

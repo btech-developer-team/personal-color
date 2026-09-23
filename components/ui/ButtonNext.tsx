@@ -7,6 +7,7 @@ import {
   saveSkinTone,
   setUnderToneByPage,
 } from "@/lib/utils/cookies";
+import { useTrackingHref } from "@/lib/utils/withSearchParams";
 
 type ButtonNextProps = {
   href?: string;
@@ -25,6 +26,7 @@ const ButtonNext = ({
   pageIndex,
   onClick,
 }: ButtonNextProps) => {
+  const withParams = useTrackingHref();
   const handleClick = () => {
     if (color) {
       // sama seperti desktop
@@ -39,7 +41,7 @@ const ButtonNext = ({
 
   return (
     <Link
-      href={href}
+      href={withParams(href)}
       onClick={handleClick}
       className="fixed top-10 right-10 flex items-center gap-3 rounded-full p-2 hover:text-[#7D4754]"
     >

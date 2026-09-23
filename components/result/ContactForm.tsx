@@ -14,7 +14,8 @@ import { contactSchema, ContactSchemaType } from "@/lib/schemas/contactSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useTrackingHref } from "@/lib/utils/withSearchParams";
 import {
   getFromCookies,
   getSkinTone,
@@ -30,6 +31,8 @@ const ContactForm = () => {
   const [success, setSuccess] = useState(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const withParams = useTrackingHref();
 
   const form = useForm<ContactSchemaType>({
     resolver: zodResolver(contactSchema),
@@ -61,10 +64,14 @@ const ContactForm = () => {
 
     const lat = localStorage.getItem("user_lat") || "";
     const long = localStorage.getItem("user_long") || "";
+    const ref = searchParams.get("ref") || "";
+    const event = searchParams.get("event") || "";
 
     const payload = {
       depth_levels: depth_levels || "",
       undertone_color: undertone_color || [],
+      ...(ref ? { ref } : {}),
+      ...(event ? { event } : {}),
       data: {
         name: contact?.name || "",
         email: contact?.email || "",
@@ -72,6 +79,8 @@ const ContactForm = () => {
         address: contact?.address || "",
         lat,
         long,
+        ...(ref ? { ref } : {}),
+        ...(event ? { event } : {}),
       },
     };
 
@@ -85,7 +94,6 @@ const ContactForm = () => {
       });
 
       const result = await res.json();
-      // console.log("Response API:", result);
 
       if (result.success && result.trx) {
         // const sendEmail = await fetch("/api/send", {
@@ -100,7 +108,6 @@ const ContactForm = () => {
         // });
 
         // const resEmail = await sendEmail.json();
-        // console.log("EMAIL RESULT:", resEmail);
 
         setSuccess(true);
 
@@ -108,7 +115,7 @@ const ContactForm = () => {
           // setLoading(false);
           removeCookie("selectedColorUnderTone");
           // removeCookie("selectedColorSkinTone");
-          router.push(`/result/${result.trx}`);
+          router.push(withParams(`/result/${result.trx}`));
         }, 1500);
       } else {
         setLoading(false);

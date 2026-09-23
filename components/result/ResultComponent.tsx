@@ -41,9 +41,6 @@ const ResultComponent = async ({ trx }: { trx: string }) => {
   const dataUndertone = data.undertone;
 
   data.depth_level = reorderProducts(data.depth_level);
-  // console.log("hasil data:", data);
-  // console.log("data undertone :", dataUndertone);
-
   const lipData = dataUndertone;
 
   const personalColor = data.personal_color;
@@ -77,8 +74,6 @@ const ResultComponent = async ({ trx }: { trx: string }) => {
     lipData?.["Face Palatte"]?.map((item: any) => ({
       src: item.imagevarian,
     })) ?? [];
-
-  // console.log("DATA RESULT SERVER:", data);
 
   return (
     <div className="bg-result min-h-screen p-4">

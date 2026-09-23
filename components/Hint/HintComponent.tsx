@@ -6,6 +6,7 @@ import Image from "next/image";
 import HomeHint from "@/public/home-hint.png";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useTrackingHref } from "@/lib/utils/withSearchParams";
 import {
   Dialog,
   DialogContent,
@@ -26,11 +27,12 @@ const dataCard = [
 const HintComponent = () => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const withParams = useTrackingHref();
 
   const handleAgree = () => {
     setOpen(false);
     setTimeout(() => {
-      router.push("/captured");
+      router.push(withParams("/captured"));
     }, 200); // smooth transition
   };
 
@@ -55,7 +57,9 @@ const HintComponent = () => {
 
         <div className="flex gap-3">
           <Button
-            onClick={() => (window.location.href = "/")}
+            onClick={() => {
+              window.location.href = withParams("/");
+            }}
             className="berl-btn-2 mt-4 w-40"
           >
             Back

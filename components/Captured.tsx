@@ -5,11 +5,13 @@ import Image from "next/image";
 import { Camera } from "lucide-react";
 import OutlineFace from "@/public/face-outline.png";
 import PreviewComponent from "./Preview";
+import { useTrackingHref } from "@/lib/utils/withSearchParams";
 
 const Captured = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  const withParams = useTrackingHref();
   const [mode, setMode] = useState<"camera" | "preview">("camera");
   const [capturedImg, setCapturedImg] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -82,7 +84,7 @@ const Captured = () => {
       <PreviewComponent
         image={capturedImg}
         onRetake={resetCamera}
-        nextHref="/palette"
+        nextHref={withParams("/palette")}
       />
     );
   }

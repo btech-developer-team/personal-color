@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { useTrackingHref } from "@/lib/utils/withSearchParams";
 
 type ButtonBackProps = {
   href?: string;
@@ -11,9 +12,11 @@ type ButtonBackProps = {
 };
 
 const ButtonBack = ({ href = "/", label = "Kembali" }: ButtonBackProps) => {
+  const withParams = useTrackingHref();
+
   return (
     <Link
-      href={href}
+      href={withParams(href)}
       className="fixed top-10 left-10 flex items-center gap-3 rounded-full p-2 hover:text-[#7D4754]"
     >
       <button className="bg-white hover:bg-[#7D4754] w-10 h-10 flex items-center justify-center rounded-full transition">

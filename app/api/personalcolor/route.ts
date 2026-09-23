@@ -5,8 +5,6 @@ const apiUrl = process.env.API_URL;
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
-    console.log(body);
     const res = await fetch(apiUrl + "/api/personalcolor/result", {
       method: "POST",
       headers: {

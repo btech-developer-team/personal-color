@@ -2,6 +2,7 @@
 
 import CardPreview from "@/components/ui/CardPreview";
 import { saveSkinTone, setUnderToneByPage } from "@/lib/utils/cookies";
+import { useTrackingHref } from "@/lib/utils/withSearchParams";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -33,6 +34,9 @@ const PalettePage = ({
   pageIndex,
   onNext,
 }: PalettePageProps) => {
+  const withParams = useTrackingHref();
+  const backHref = withParams(urlBack);
+  const nextHref = withParams(nextTone);
   const [capturedImg, setCapturedImg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -116,7 +120,7 @@ const PalettePage = ({
             </div>
 
             <div className="flex gap-3">
-              <Link href={urlBack} className="mt-4">
+              <Link href={backHref} className="mt-4">
                 <button
                   onClick={() => setIsButtonBackLoading(true)}
                   className="mt-8 cursor-pointer w-[100px] bg-[#7C2C2C] text-white py-3 rounded-full font-bold shadow-md hover:opacity-90 transition flex items-center justify-center gap-2"
@@ -130,7 +134,7 @@ const PalettePage = ({
                 </button>
               </Link>
 
-              <Link href={nextTone} className="mt-4">
+              <Link href={nextHref} className="mt-4">
                 <button
                   onClick={() => {
                     setIsButtonNextLoading(true);
@@ -181,7 +185,7 @@ const PalettePage = ({
           </div>
 
           <div className="flex gap-3">
-            <Link href={urlBack} className="mt-4">
+            <Link href={backHref} className="mt-4">
               <button
                 onClick={() => setIsButtonBackLoading(true)}
                 className="mt-8 cursor-pointer w-[100px] bg-[#7C2C2C] text-white py-3 rounded-full font-bold shadow-md hover:opacity-90 transition flex items-center justify-center gap-2"
@@ -195,7 +199,7 @@ const PalettePage = ({
               </button>
             </Link>
 
-            <Link href={nextTone} className="mt-4">
+            <Link href={nextHref} className="mt-4">
               <button
                 onClick={() => {
                   setIsButtonNextLoading(true);
