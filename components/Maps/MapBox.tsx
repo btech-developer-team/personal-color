@@ -47,10 +47,10 @@ export default function Map({ locations }: MapProps) {
   const map = useRef<maplibregl.Map | null>(null);
 
   useEffect(() => {
-    if (map.current) return;
+    if (map.current || !mapContainer.current) return;
 
-    map.current = new maplibregl.Map({
-      container: mapContainer.current!,
+    const instance = new maplibregl.Map({
+      container: mapContainer.current,
       style: {
         version: 8,
         sources: {
@@ -84,8 +84,15 @@ export default function Map({ locations }: MapProps) {
       new maplibregl.Marker({ color: "#06D6A0" })
         .setLngLat(loc.coordinates)
         .setPopup(popup)
-        .addTo(map.current!);
+        .addTo(instance);
     });
+
+    map.current = instance;
+
+    return () => {
+      instance.remove();
+      map.current = null;
+    };
   }, [locations]);
 
   return (

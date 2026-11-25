@@ -4,7 +4,12 @@ const nextConfig: NextConfig = {
   // cacheComponents: true,
   reactCompiler: true,
   images: {
-    domains: ["s3.berlstore.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "s3.berlstore.com",
+      },
+    ],
   },
 };
 

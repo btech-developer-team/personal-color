@@ -1,4 +1,14 @@
-import Map, { Location } from "@/components/Maps/MapBox";
+import dynamic from "next/dynamic";
+import type { Location } from "@/components/Maps/MapBox";
+
+// maplibre-gl is browser-only and large, so keep it out of the server build
+// and the initial client chunk. Load it only when this map actually renders.
+const Map = dynamic(() => import("@/components/Maps/MapBox"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full rounded-lg bg-muted animate-pulse" />
+  ),
+});
 
 const locations: Location[] = [
   {
